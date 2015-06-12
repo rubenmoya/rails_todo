@@ -26,28 +26,20 @@ class TodoListsController < ApplicationController
   def create
     @todo_list = TodoList.new(todo_list_params)
 
-    respond_to do |format|
-      if @todo_list.save
-        format.html { redirect_to @todo_list, notice: 'Todo list was successfully created.' }
-        format.json { render :show, status: :created, location: @todo_list }
-      else
-        format.html { render :new }
-        format.json { render json: @todo_list.errors, status: :unprocessable_entity }
-      end
+    if @todo_list.save
+      redirect_to @todo_list, notice: 'Todo list was successfully created.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /todo_lists/1
   # PATCH/PUT /todo_lists/1.json
   def update
-    respond_to do |format|
-      if @todo_list.update(todo_list_params)
-        format.html { redirect_to @todo_list, notice: 'Todo list was successfully updated.' }
-        format.json { render :show, status: :ok, location: @todo_list }
-      else
-        format.html { render :edit }
-        format.json { render json: @todo_list.errors, status: :unprocessable_entity }
-      end
+    if @todo_list.update(todo_list_params)
+      redirect_to @todo_list, notice: 'Todo list was successfully updated.'
+    else
+      render :edit
     end
   end
 
@@ -55,10 +47,7 @@ class TodoListsController < ApplicationController
   # DELETE /todo_lists/1.json
   def destroy
     @todo_list.destroy
-    respond_to do |format|
-      format.html { redirect_to todo_lists_url, notice: 'Todo list was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to root_path, notice: 'Todo list was successfully destroyed.'
   end
 
   private
