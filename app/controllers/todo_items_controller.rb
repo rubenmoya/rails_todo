@@ -3,9 +3,13 @@ class TodoItemsController < ApplicationController
   before_action :set_todo_item, except: [:create]
 
   def create
-    @todo_item = @todo_list.todo_items.create(todo_item_params)
+    @todo_item = @todo_list.todo_items.new(todo_item_params)
 
-    redirect_to @todo_list, notice: "Todo Item added"
+    if @todo_item.save
+      redirect_to @todo_list, notice: "Todo Item added"
+    else
+      redirect_to @todo_list, notice: "Todo Item could not be added"
+    end
   end
 
   def destroy
